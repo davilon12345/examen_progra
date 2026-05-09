@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4 animate-fade-in">
+    <div class="col-12">
+        <h2 class="mb-3 text-primary neon-text"><i class="fa-solid fa-database me-2"></i> Explorador de Base de Datos</h2>
+        
+        <div class="card bg-dark border-secondary shadow neon-box mb-4">
+            <div class="card-body">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label text-light">Seleccionar Tabla</label>
+                        <select id="table-selector" class="form-select bg-dark text-light border-secondary neon-focus">
+                            <option value="">Cargando tablas...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label text-light">Límite de Registros</label>
+                        <select id="limit-selector" class="form-select bg-dark text-light border-secondary neon-focus">
+                            <option value="100">100</option>
+                            <option value="500">500</option>
+                            <option value="1000">1000</option>
+                            <option value="5000">5000</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button id="btn-search-table" class="btn btn-primary w-100 neon-btn">
+                            <i class="fa-solid fa-search me-2"></i> Consultar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-dark border-secondary shadow neon-box">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped table-hover neon-table" id="dynamic-datatable">
+                        <!-- Head and Body will be populated dynamically -->
+                        <thead><tr><th>Seleccione una tabla para ver los datos</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/datatable.js') }}"></script>
+{% endblock %}

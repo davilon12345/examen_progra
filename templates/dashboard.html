@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4 animate-fade-in">
+    <div class="col-12">
+        <h2 class="mb-3 text-primary gamer-font"><i class="fa-solid fa-crosshairs me-2"></i> Dashboard de Clientes</h2>
+        
+        <!-- Área de Filtros -->
+        <div class="card bg-dark shadow neon-box mb-4">
+            <div class="card-body">
+                <h5 class="card-title text-light mb-3 gamer-font"><i class="fa-solid fa-filter me-2 text-primary"></i> Filtros de Datos</h5>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label text-light small gamer-font">Segmento</label>
+                        <select id="filter-segment" class="form-select">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-light small gamer-font">Región</label>
+                        <select id="filter-region" class="form-select">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-light small gamer-font">Año</label>
+                        <select id="filter-year" class="form-select">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-light small gamer-font">Categoría</label>
+                        <select id="filter-category" class="form-select">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPIs Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card text-center bg-dark shadow neon-box h-100 kpi-card">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <i class="fa-solid fa-users fs-1 text-info mb-3"></i>
+                        <h6 class="card-subtitle mb-2 text-muted text-uppercase gamer-font">Total Clientes</h6>
+                        <h3 class="card-title text-light m-0 gamer-font" id="kpi-total-clientes">...</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center bg-dark shadow neon-box h-100 kpi-card">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <i class="fa-solid fa-user-check fs-1 text-success mb-3"></i>
+                        <h6 class="card-subtitle mb-2 text-muted text-uppercase gamer-font">Clientes Activos</h6>
+                        <h3 class="card-title text-light m-0 gamer-font" id="kpi-clientes-activos">...</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center bg-dark shadow neon-box h-100 kpi-card">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <i class="fa-solid fa-receipt fs-1 text-warning mb-3"></i>
+                        <h6 class="card-subtitle mb-2 text-muted text-uppercase gamer-font">Ticket Promedio</h6>
+                        <h3 class="card-title text-light m-0 gamer-font" id="kpi-ticket-promedio">...</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center bg-dark shadow neon-box h-100 kpi-card">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <i class="fa-solid fa-hand-holding-dollar fs-1 text-primary mb-3"></i>
+                        <h6 class="card-subtitle mb-2 text-muted text-uppercase gamer-font">Ventas / Cliente</h6>
+                        <h3 class="card-title text-light m-0 gamer-font" id="kpi-ventas-promedio">...</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card bg-dark shadow neon-box h-100 chart-container">
+                    <div class="card-body">
+                        <h5 class="card-title text-light gamer-font fs-6"><i class="fa-solid fa-chart-pie me-2 text-primary"></i> Ventas por Segmento</h5>
+                        <div style="height: 300px;">
+                            <canvas id="chart-ventas-segmento"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-dark shadow neon-box h-100 chart-container">
+                    <div class="card-body">
+                        <h5 class="card-title text-light gamer-font fs-6"><i class="fa-solid fa-medal me-2 text-warning"></i> Top 10 Clientes por Ventas</h5>
+                        <div style="height: 300px;">
+                            <canvas id="chart-top-clientes"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-dark shadow neon-box h-100 chart-container">
+                    <div class="card-body">
+                        <h5 class="card-title text-light gamer-font fs-6"><i class="fa-solid fa-earth-americas me-2 text-success"></i> Clientes por Región</h5>
+                        <div style="height: 300px;">
+                            <canvas id="chart-clientes-region"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-dark shadow neon-box h-100 chart-container">
+                    <div class="card-body">
+                        <h5 class="card-title text-light gamer-font fs-6"><i class="fa-solid fa-money-bill-trend-up me-2 text-info"></i> Ticket Promedio por Segmento</h5>
+                        <div style="height: 300px;">
+                            <canvas id="chart-ticket-segmento"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table Section -->
+        <div class="card bg-dark shadow neon-box">
+            <div class="card-body">
+                <h5 class="card-title text-light mb-3 gamer-font"><i class="fa-solid fa-ranking-star me-2 text-warning"></i> Ranking de Jugadores (Clientes)</h5>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped table-hover neon-table" id="customers-table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Segmento</th>
+                                <th>Región</th>
+                                <th>Pedidos</th>
+                                <th>Ventas</th>
+                                <th>Ganancia</th>
+                                <th>Ticket Prom.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Datos inyectados por JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
