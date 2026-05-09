@@ -3,7 +3,7 @@ import os
 class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",
-        "postgresql://postgres:Davilon_123@localhost:5432/Store?options=-csearch_path%3Dsuperstore"
+        "postgresql://postgres:Davilon_123@localhost:5432/Store2"
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
