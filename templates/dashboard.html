@@ -1,6 +1,4 @@
-{% extends "base.html" %}
 
-{% block content %}
 <div class="row mb-4 animate-fade-in">
     <div class="col-12">
         <h2 class="mb-3 text-primary gamer-font"><i class="fa-solid fa-crosshairs me-2"></i> Dashboard de Clientes</h2>
@@ -140,7 +138,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Datos inyectados por JS -->
                         </tbody>
                     </table>
                 </div>
@@ -149,8 +146,7 @@
 
     </div>
 </div>
-{% endblock %}
 
-{% block scripts %}
+
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-{% endblock %}
+

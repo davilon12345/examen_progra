@@ -17,13 +17,11 @@ def dashboard():
 def detalle():
     return render_template('detalle.html')
 
-# Función para envolver respuestas y capturar errores globales en JSON
 def error_handler(f):
     def wrapper(*args, **kwargs):
         try:
             return f(*args, **kwargs)
         except Exception as e:
-            # Imprime el error en la terminal para que puedas verlo
             print("ERROR EN EL SERVIDOR:")
             traceback.print_exc()
             return jsonify({'error': str(e)}), 500

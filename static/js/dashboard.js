@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Referencias a los elementos del DOM
     const filterSegment = document.getElementById('filter-segment');
     const filterRegion = document.getElementById('filter-region');
     const filterYear = document.getElementById('filter-year');
@@ -12,10 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let chartTicketSegmento = null;
     let dataTableInstance = null;
 
-    // Ocultar error inicial si existe
     const alertBox = document.getElementById('global-alert');
 
-    // Función para manejar errores de fetch globalmente
     function handleFetchError(error) {
         console.error('Fetch Error:', error);
         if (window.showError) {

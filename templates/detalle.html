@@ -1,6 +1,4 @@
-{% extends "base.html" %}
 
-{% block content %}
 <div class="row mb-4 animate-fade-in">
     <div class="col-12">
         <h2 class="mb-3 text-primary neon-text"><i class="fa-solid fa-database me-2"></i> Explorador de Base de Datos</h2>
@@ -45,8 +43,5 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
 <script src="{{ url_for('static', filename='js/datatable.js') }}"></script>
-{% endblock %}
+
