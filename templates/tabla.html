@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SuperStore | Explorador de Datos</title>
+    <style>
+        /* VARIABLES Y TEMAS */
+        :root { 
+            --bg: #f8fafc; --card: #ffffff; --primary: #3b82f6; 
+            --text: #1e293b; --border: #e2e8f0; --neon: rgba(59, 130, 246, 0.5);
+        }
+        body.dark-mode { 
+            --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; 
+            --border: #334155; --neon: rgba(59, 130, 246, 0.3);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; background: var(--bg); 
+            color: var(--text); transition: 0.3s; padding: 20px; 
+        }
+
+        /* ANIMACIÓN DE ENTRADA */
+        .container { 
+            background: var(--card); border-radius: 15px; padding: 25px; 
+            border: 1px solid var(--border); transition: all 0.4s ease;
+            animation: slideUp 0.6s ease;
+        }
+        .container:hover { box-shadow: 0 0 30px var(--neon); }
+
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* KPIs SUPERIORES */
+        .kpi-row {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 15px; margin-bottom: 25px;
+        }
+        .kpi-mini-card {
+            background: var(--card); padding: 15px; border-radius: 10px;
+            border: 1px solid var(--border); text-align: center;
+        }
+        .kpi-mini-card span { font-size: 12px; opacity: 0.7; text-transform: uppercase; }
+        .kpi-mini-card h3 { margin: 5px 0 0 0; color: var(--primary); font-size: 1.4rem; }
+
+        /* CONTROLES / FILTROS */
+        .controls { 
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; 
+            gap: 10px; margin-bottom: 20px; 
+        }
+        input, select { 
+            padding: 10px; border-radius: 8px; border: 1px solid var(--border); 
+            background: var(--bg); color: var(--text); outline: none;
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 5px var(--primary); }
+
+        /* TABLA GAMING */
+        .table-wrapper {
+            max-height: 500px; overflow-y: auto; 
+            border: 1px solid var(--border); border-radius: 10px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th { 
+            background: var(--primary); color: white; padding: 12px; 
+            text-align: left; position: sticky; top: 0; z-index: 10;
+        }
+        td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        
+        tr { transition: 0.3s; }
+        tr:hover { 
+            background: rgba(59, 130, 246, 0.15) !important; 
+            transform: scale(1.005); 
+            box-shadow: 0 0 10px var(--neon);
+        }
+
+        .row-anim { animation: rowIn 0.4s ease forwards; }
+        @keyframes rowIn { 
+            from { opacity: 0; transform: translateX(-10px); } 
+            to { opacity: 1; transform: translateX(0); } 
+        }
+
+        .digital-clock { font-family: monospace; font-weight: bold; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <a href="/" style="color:var(--primary); text-decoration:none; font-weight:bold;">← Volver al Dashboard</a>
+        <div id="clock" class="digital-clock">00:00:00</div>
+        <button onclick="toggleTheme()" style="background:none; border:none; cursor:pointer; font-size:1.5rem;">🌓</button>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-mini-card"><span>Ventas Totales</span><h3 id="k1">$0.00</h3></div>
+        <div class="kpi-mini-card"><span>Ganancia Total</span><h3 id="k2">$0.00</h3></div>
+        <div class="kpi-mini-card"><span>Descuento Prom.</span><h3 id="k3">0%</h3></div>
+        <div class="kpi-mini-card"><span>Cantidad</span><h3 id="k4">0</h3></div>
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <input type="text" id="sName" placeholder="Buscar cliente..." onkeyup="filter()">
+            <select id="sSegment" onchange="filter()"><option value="">Segmentos</option></select>
+            <select id="sRegion" onchange="filter()"><option value="">Regiones</option></select>
+            <button onclick="actualizarDatos()" style="background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;">🔄 Refrescar</button>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>Nombre Cliente</th>
+                        <th>Segmento</th>
+                        <th>Región</th>
+                    </tr>
+                </thead>
+                <tbody id="tBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // CAMBIO DE TEMA
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
