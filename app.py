@@ -4,7 +4,6 @@ from sqlalchemy import func
 
 app = Flask(__name__)
 
-# Configuración de conexión (Asegúrate de usar tus credenciales)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Davilon_123@localhost:5432/Store2'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -12,7 +11,7 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    # Preparamos los filtros para evitar errores en el HTML
+    
     segmentos = db.session.query(Customer.segment).distinct().all()
     regiones = db.session.query(Customer.region).distinct().all()
     
@@ -30,9 +29,9 @@ def get_data():
     if segmento != 'all':
         query = query.filter(Customer.segment == segmento)
     
-    clientes_lista = query.limit(10).all() # Limitamos a 10 para la tabla
+    clientes_lista = query.limit(10).all() 
     
-    # ... tus cálculos de KPIs aquí ...
+   
 
     return jsonify({
         'total_clientes': total_clientes,
